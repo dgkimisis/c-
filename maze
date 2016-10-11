@@ -1,0 +1,127 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsApplication5
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        //dimiourgoumr tixaio simeio enarksis kai tixaio simeio termatismou 
+        //perimetrika toy kanavou
+        public static void Randomcells(Random rand)
+        {
+            int[] kanavos = new int[5];
+            rand.NextBytes(values);
+            foreach (int value in kanavos)
+                Console.Write("{0, 5}", value);
+            Console.WriteLine();
+        }
+        
+        //dimiourgoume ena simeio pou borei na metakinithei orizontia kai katheta
+
+            public void Movement()
+            {
+            for
+            Random randomstep = new Random();
+            int step = randomstep.Next(-1, 2);
+            }
+
+            //Dimiourgoume ton periorismo tis kinisis gia na min vgoume ektos oriwn
+            static bool Outofbounds(int x, int y)
+            {
+               if (x < 0)
+                {
+                 return false;
+                }
+               if (y < 0)
+                {
+                return false;
+                }
+               if (x > 10)
+                {
+               return false;
+                }
+               if (y > 10)
+                {
+                return false;
+                }
+            }
+
+        enum Periexomeno
+        {
+            Diadromos,
+            Toixos
+        };
+        //Apothikevoume tis 
+        class Kinisi
+        {
+            Periexomeno Koutia = Periexomeno.Empty;
+            public Periexomeno Koutia
+            {
+                get { return Koutia; }
+                set { Koutia = value; }
+            }
+
+            int apostasi = 100;
+            public int Apostasi
+            {
+                get { return apostasi; }
+                set { apostasi = value; }
+            }
+
+            bool Perasma = false;
+            public bool Perasma
+            {
+                get { return Perasma; }
+                set { Perasma = value; }
+            }
+
+        //Dimiourgoume random path
+        public void RandomPath
+
+            {
+
+            }
+
+        }
+
+            //vazoume arithmous sta kelia tou pinaka
+            for (int i = 1; i <= 5; i++)
+            {
+                for (int j = 1; j <= 5; j++)
+                {
+                    maze[i, j] = 1;
+                }
+            }
+
+            //Ektiponoume dokimastika ta kelia tou pinaka
+            foreach (int b in maze)
+            {
+                Console.Write(b);
+            }
+            
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+        for{i maze.Length  }
+            Random wall = new Random();
+            int isitawall = wall.Next(0, 1);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = isitawall.Tostring();
+        }
+}
