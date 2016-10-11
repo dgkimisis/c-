@@ -24,7 +24,7 @@ namespace ConsoleApplication8
                 }
             }
             //public Pitstops(int b) mou vgazei minima lathous - CS1520 Method must have a return type.
-            public void Pitstops()
+            public void color()
             {
                 string c = "yellow";
             }
