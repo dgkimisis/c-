@@ -1,0 +1,54 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication8
+{
+    class Program
+    {
+        public class car
+        {
+            public string brand = "Ferrari";
+            public string[] wins = { "Monza", "Bahrein", "Monaco" };
+            public Random R = new Random();
+            public int[] pitlane = new int[10];
+            public string c;
+
+            public car()
+            {
+                for (int i = 1; i < 10; i++)
+                {
+                   pitlane[i] = R.Next(1, 4);
+                }
+            }
+            //public Pitstops(int b) mou vgazei minima lathous - CS1520 Method must have a return type.
+            public void Pitstops()
+            {
+                string c = "yellow";
+            }
+        }
+    
+
+
+        static void Main(string[] args)
+        {
+            car a = new car();
+            //Which car brand are we running with?
+            Console.WriteLine("We are driving with team" + " " + a.brand);
+            //Where was our nth victory?
+            Console.WriteLine("The first win was at" + " " + a.wins[0]);
+            //How many matches have we won beyond Monza, Bahrein and Monaco?
+            Console.WriteLine("Beyond Monza, Bahrein and Monaco, This year we won" + " " + a.R.Next(15, 21) + " " + "matches");
+            //How many pit stops did we make in
+            Console.WriteLine("The number of pitstops we made the first" + " " + a.pitlane.Length + " " + "games was" + " ");
+            foreach (int x in a.pitlane) 
+            {
+                Console.Write("{0} ", a.pitlane[x]);
+            }
+            //What are the colours of the team sponsor?
+                Console.WriteLine(a.c);
+        }
+    }
+}
