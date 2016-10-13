@@ -15,9 +15,9 @@ namespace ConsoleApplication11
 
             public swap(T i, T j)
             {
-                T x = i;
-                i = j;
-                j = x;
+                T x = this.i;
+                this.i = this.j;
+                this.j = x;
             }
         }
         static void Main(string[] args)
