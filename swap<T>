@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication11
+{
+    class Program
+    {
+        public class swap<T>
+        {
+            public T i;
+            public T j;
+
+            public swap(T i, T j)
+            {
+                T x = i;
+                i = j;
+                j = x;
+            }
+        }
+        static void Main(string[] args)
+        {
+            swap<string> name = new swap<string>("Mike", "Bob");
+            Console.Write(name.i);
+            Console.Write(name.j);
+        }
+    }
+}
