@@ -1,0 +1,52 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication11
+{
+    class Program
+    {
+        public class Animal
+        {
+            public int Age = 3;
+            public string Name = "Shiba";
+            public string Gender = "Male";
+            public string sound; 
+        }
+
+
+        public class Dog : Animal
+        {
+            public Dog()
+            {
+                sound = "Woof";
+            }
+        }
+
+
+        public class Cat : Animal
+        {
+            public Cat()
+            {
+                sound = "Meow";
+            }
+        }
+
+
+        public class Lion : Animal
+        {
+            public Lion()
+            {
+                sound = "Roar";
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            Lion pet = new Lion();
+            Console.WriteLine(String.Format("The name of the lion is {0} it is {1} years old and it sounds like {2}", pet.Name, pet.Age, pet.sound));
+        }
+    }
+}
