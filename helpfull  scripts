@@ -1,0 +1,16 @@
+        public string Fullaname
+        {
+            get
+            {
+                return name + " " + surname;
+            }
+
+        }
+///// is the same as
+        public string GetFullName()
+        {
+            return name + " " + surname;
+        }
+ _______________________________________________________
+ 
+ 
