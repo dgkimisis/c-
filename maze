@@ -45,13 +45,13 @@ namespace ConsoleApplication13
                 }
             }
 
-
             //Forward is checking which direction has been met the least times
             //and sets a value to NextMove so that our hero moves accordingly.
-            public int Forward(int x, int y)
-            {
+            public void Forward(int x, int y)
+            {     
                 List<int> Steps = new List<int>();
                 {
+                    Steps.Clear();
                     if (x < Size)
                     Steps.Add(Count[x + 1, y]);
                     if (x > 0)
@@ -63,41 +63,43 @@ namespace ConsoleApplication13
                 }
                 Steps.Sort();
                 if (Steps[0] == Count[x + 1, y])
-                    return = 1;
+                    NextStep = 1;
                 else if (Steps[0] == Count[x - 1, y])
-                    return = 2;
+                    NextStep = 2;
                 else if (Steps[0] == Count[x, y + 1])
-                    return = 3;
+                    NextStep = 3;
                 else
-                    return = 4;
+                    NextStep = 4;
             }
 
             public void Movement(int x, int y)
             {
+                int a = x;
+                int b = y;
                 switch (NextStep)
                 {
                    //Move Right
                    case 1:
-                       x++;
-                       Count[x, y]++;
+                       a++;
+                       Count[a, b]++;
                    break;
 
                     //Move left
                     case 2:              
-                       x--;
-                       Count[x, y]++;
+                       a--;
+                       Count[a, b]++;
                     break;
                         
                     //Move down
                     case 3:                   
-                        y++;
-                        Count[x, y]++;
+                        b++;
+                        Count[a,b]++;
                     break;
 
                     //Move up
                     case 4:             
-                        y--;
-                        Count[x, y]++;
+                        b--;
+                        Count[a, b]++;
                     break;
                 }
             }
@@ -118,11 +120,15 @@ namespace ConsoleApplication13
             int y_exit = 4;
 
             //Make the trip from hero's starting point to the exit
-            player.Forward(x_hero, y_hero);
-            player.Movement(x_hero, y_hero);
+            for (int i = 0; i < 10; i++) {
+                player.Forward(x_hero, y_hero);
+                player.Movement(x_hero, y_hero);
+                Console.WriteLine(x_hero + " " + y_hero);
+                Console.WriteLine(player.NextStep);
+            }
 
   
-             Console.WriteLine(x_hero + " " + y_hero);
+             
              //while (x_hero != x_exit && y_hero != y_exit);
 
         }
