@@ -1,127 +1,130 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Collections;
 
-namespace WindowsFormsApplication5
+namespace ConsoleApplication13
 {
-    public partial class Form1 : Form
+    class Program
     {
-        public Form1()
+        public class Maze
         {
-            InitializeComponent();
-        }
-
-        //dimiourgoumr tixaio simeio enarksis kai tixaio simeio termatismou 
-        //perimetrika toy kanavou
-        public static void Randomcells(Random rand)
-        {
-            int[] kanavos = new int[5];
-            rand.NextBytes(values);
-            foreach (int value in kanavos)
-                Console.Write("{0, 5}", value);
-            Console.WriteLine();
-        }
-        
-        //dimiourgoume ena simeio pou borei na metakinithei orizontia kai katheta
-
-            public void Movement()
+            //Declare maze and size
+            private static int _size = 5;
+            public static int Size
             {
-            for
-            Random randomstep = new Random();
-            int step = randomstep.Next(-1, 2);
+                get { return _size; }
+                set { _size = value; }
             }
+            //We declare a maze as a map with passages and mountains
+            public int[,] maze = new int[Size, Size];
 
-            //Dimiourgoume ton periorismo tis kinisis gia na min vgoume ektos oriwn
-            static bool Outofbounds(int x, int y)
+            //We create a class that will count how many times the hero has stepped 
+            //into every cell
+            public int[,] Count = new int[Size, Size];
+
+            //We create a random number to create Mountains
+            Random r = new Random();
+
+            //We check which will be our next step after checking. 
+            //A counting integer will determine if we go up down left or right.
+            public int NextStep = 0;
+
+            //We fill the map with 1 as cells you can walk through
+            public Maze()
             {
-               if (x < 0)
+                for (int i = 0; i < Size; i++)
                 {
-                 return false;
-                }
-               if (y < 0)
-                {
-                return false;
-                }
-               if (x > 10)
-                {
-               return false;
-                }
-               if (y > 10)
-                {
-                return false;
+                    for (int j = 0; j < Size; j++)
+                    {
+                        maze[i, j] = 1;
+                        Count[i, j] = 0;
+                    }
                 }
             }
 
-        enum Periexomeno
-        {
-            Diadromos,
-            Toixos
-        };
-        //Apothikevoume tis 
-        class Kinisi
-        {
-            Periexomeno Koutia = Periexomeno.Empty;
-            public Periexomeno Koutia
+
+            //Forward is checking which direction has been met the least times
+            //and sets a value to NextMove so that our hero moves accordingly.
+            public int Forward(int x, int y)
             {
-                get { return Koutia; }
-                set { Koutia = value; }
-            }
-
-            int apostasi = 100;
-            public int Apostasi
-            {
-                get { return apostasi; }
-                set { apostasi = value; }
-            }
-
-            bool Perasma = false;
-            public bool Perasma
-            {
-                get { return Perasma; }
-                set { Perasma = value; }
-            }
-
-        //Dimiourgoume random path
-        public void RandomPath
-
-            {
-
-            }
-
-        }
-
-            //vazoume arithmous sta kelia tou pinaka
-            for (int i = 1; i <= 5; i++)
-            {
-                for (int j = 1; j <= 5; j++)
+                List<int> Steps = new List<int>();
                 {
-                    maze[i, j] = 1;
+                    if (x < Size)
+                    Steps.Add(Count[x + 1, y]);
+                    if (x > 0)
+                    Steps.Add(Count[x - 1, y]);
+                    if (y < Size)
+                    Steps.Add(Count[x, y + 1]);
+                    if (y > 0)
+                    Steps.Add(Count[x, y - 1]);
+                }
+                Steps.Sort();
+                if (Steps[0] == Count[x + 1, y])
+                    return = 1;
+                else if (Steps[0] == Count[x - 1, y])
+                    return = 2;
+                else if (Steps[0] == Count[x, y + 1])
+                    return = 3;
+                else
+                    return = 4;
+            }
+
+            public void Movement(int x, int y)
+            {
+                switch (NextStep)
+                {
+                   //Move Right
+                   case 1:
+                       x++;
+                       Count[x, y]++;
+                   break;
+
+                    //Move left
+                    case 2:              
+                       x--;
+                       Count[x, y]++;
+                    break;
+                        
+                    //Move down
+                    case 3:                   
+                        y++;
+                        Count[x, y]++;
+                    break;
+
+                    //Move up
+                    case 4:             
+                        y--;
+                        Count[x, y]++;
+                    break;
                 }
             }
-
-            //Ektiponoume dokimastika ta kelia tou pinaka
-            foreach (int b in maze)
-            {
-                Console.Write(b);
-            }
-            
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+
+
+        static void Main(string[] args)
         {
-        for{i maze.Length  }
-            Random wall = new Random();
-            int isitawall = wall.Next(0, 1);
-        }
+            Maze player = new Maze();
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            textBox1.Text = isitawall.Tostring();
+            //We manually put Hero's starting point
+            int x_hero = 0;
+            int y_hero = 0;
+
+            //We manually put Labyrinth's Exit Point
+            int x_exit = 4;
+            int y_exit = 4;
+
+            //Make the trip from hero's starting point to the exit
+            player.Forward(x_hero, y_hero);
+            player.Movement(x_hero, y_hero);
+
+  
+             Console.WriteLine(x_hero + " " + y_hero);
+             //while (x_hero != x_exit && y_hero != y_exit);
+
         }
+    }
 }
