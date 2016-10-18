@@ -1,0 +1,57 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication16
+{
+    class Program
+    {
+        public class Grades
+        {
+            public static int Students = 5;
+            public int _students = Students;
+
+            public static int Lessons = 10;
+            public int _lessons = Lessons;
+
+            //Oi grames adiporosopevoun 
+            public int[,] Results = new int[Students, Lessons];
+
+            Random r = new Random();
+
+            public int rand()
+            {
+                return r.Next(10, 21);
+            }
+
+
+            public void calc()
+            {
+
+                for (int i = 0; i < Students; i++)
+                {
+                    for (int j = 0; j < Lessons; j++)
+                    {
+                        Results[i, j] = rand();
+                    }
+                }
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            Grades year2005 = new Grades();
+            year2005.calc();
+            for (int i = 0; i < year2005._students; i++)
+            {
+                for (int j = 0; j < year2005._lessons; j++)
+                {
+                    Console.WriteLine(year2005.Results[i, j]);
+                }
+            }
+        }
+    }
+}
+
