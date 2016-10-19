@@ -47,9 +47,9 @@ namespace ConsoleApplication13
 
             //Forward is checking which direction has been met the least times
             //and sets a value to NextMove so that our hero moves accordingly.
-            public Maze(int x, int y, ref bool finito)
+            public void Forward(int x, int y)
             {
-                if (!finito)
+                for (int i = 0; i < 4; i++)
                 {
                     List<int> Steps = new List<int>();
                     {
@@ -73,7 +73,6 @@ namespace ConsoleApplication13
                     else
                     { y--; }
                     Count[x, y]++;
-
                 }
             }
         }
@@ -82,6 +81,7 @@ namespace ConsoleApplication13
         static void Main(string[] args)
         {
             Maze player = new Maze();
+            player.Forward(0, 0);
 
             //We manually put Hero's starting point
             int x0 = 0;
@@ -89,9 +89,7 @@ namespace ConsoleApplication13
 
             //We manually put Labyrinth's Exit Point
             int x1 = 4;
-            int y1 = 4;
-
-            
+            int y1 = 4;           
         }
     }
 }
