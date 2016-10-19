@@ -39,7 +39,15 @@ namespace ConsoleApplication13
                 {
                     for (int j = 0; j < Size; j++)
                     {
-                        maze[i, j] = 1;
+                        int rand = r.Next(0, 3);
+                        if (rand == 0)
+                        {
+                            maze[i, j] = 0;
+                        }
+                        else
+                        {
+                            maze[i, j] = 1;
+                        }
                         Count[i, j] = 0;
                     }
                 }
@@ -81,7 +89,6 @@ namespace ConsoleApplication13
         static void Main(string[] args)
         {
             Maze player = new Maze();
-            player.Forward(0, 0);
 
             //We manually put Hero's starting point
             int x0 = 0;
@@ -89,7 +96,15 @@ namespace ConsoleApplication13
 
             //We manually put Labyrinth's Exit Point
             int x1 = 4;
-            int y1 = 4;           
+            int y1 = 4;
+
+
+            //We run the maze challenge.
+            do
+            {
+                player.Forward(x0, y0);
+
+            } while (x0 != x1 && y0 != y1);                        
         }
     }
 }
