@@ -12,12 +12,8 @@ namespace ConsoleApplication13
         public class Maze
         {
             //Declare maze and size
-            private static int _size = 5;
-            public static int Size
-            {
-                get { return _size; }
-                set { _size = value; }
-            }
+            public static int Size = 5;
+            public int size = Size;
             //We declare a maze as a map with passages and mountains
             public int[,] maze = new int[Size, Size];
 
@@ -28,24 +24,30 @@ namespace ConsoleApplication13
             //We create a random number to create Mountains
             Random r = new Random();
 
-            //We check which will be our next step after checking. 
-            //A counting integer will determine if we go up down left or right.
+            //We check which will be our next step after checking if the passage is free and
+            //how many times we have stepped in a cell, so that we avoid turning around the same place.
             public int NextStep = 0;
 
-            //We fill the map with 1 as cells you can walk through
-            public Maze()
+            //We fill the map with 1 as passages you can walk through
+
+            public Maze(ref int b)
             {
                 for (int i = 0; i < Size; i++)
                 {
                     for (int j = 0; j < Size; j++)
                     {
-                        int rand = r.Next(0, 3);
+                        //We create the obstacle cells.
+                        //rand determines how often we are going to get obstacle cells
+                        int rand = r.Next(0, 5);
                         if (rand == 0)
                         {
+                            //We declare some random cells to be our obstacles
                             maze[i, j] = 0;
+                            b++;
                         }
                         else
                         {
+                            //What is a passage
                             maze[i, j] = 1;
                         }
                         Count[i, j] = 0;
@@ -53,58 +55,143 @@ namespace ConsoleApplication13
                 }
             }
 
+
             //Forward is checking which direction has been met the least times
-            //and sets a value to NextMove so that our hero moves accordingly.
-            public void Forward(int x, int y)
+            //and if this direction meets an obstacle so that the hero avoids it.
+            public void Forward(ref int x, ref int y)
             {
-                for (int i = 0; i < 4; i++)
+                //We create a list with temporary elements
+                //Which will represent the cells above, below, left or right
+                //of the current cell
+                List<int> Steps = new List<int>();
+
+
+                //failsafe booleans because without them the program will
+                //try to check for Steps[0] == Count[x + 1, y] for example 
+                //but Count[x + 1, y] might not exist and console will crash
+
+                bool failsafe1 = false;
+                bool failsafe2 = false;
+                bool failsafe3 = false;
+                bool failsafe4 = false;
+
                 {
-                    List<int> Steps = new List<int>();
+                    //We clean up the Steps list to refill it with the new values
+                    Steps.Clear();
+
+                    if (x < Size - 1) //&& maze[x + 1, y] != 0);
                     {
-                        Steps.Clear();
-                        if (x < Size)
-                            Steps.Add(Count[x + 1, y]);
-                        if (x > 0)
-                            Steps.Add(Count[x - 1, y]);
-                        if (y < Size)
-                            Steps.Add(Count[x, y + 1]);
-                        if (y > 0)
-                            Steps.Add(Count[x, y - 1]);
+                        Steps.Add(Count[x + 1, y]);
+                        failsafe1 = true;
+
                     }
-                    Steps.Sort();
-                    if (Steps[0] == Count[x + 1, y])
-                    { x++; }
-                    else if (Steps[0] == Count[x - 1, y])
-                    { x--; }
-                    else if (Steps[0] == Count[x, y + 1])
-                    { y++; }
-                    else
-                    { y--; }
-                    Count[x, y]++;
+                    if (x > 0) //&& maze[x - 1, y] != 0);
+                    {
+                        Steps.Add(Count[x - 1, y]);
+                        failsafe2 = true;
+                    }
+                    if (y < Size - 1) //&& maze[x, y + 1] != 0);
+                    {
+                        Steps.Add(Count[x, y + 1]);
+                        failsafe3 = true;
+                    }
+                    if (y > 0) //&& maze[x, y - 1] != 0);
+                    {
+                        Steps.Add(Count[x, y - 1]);
+                        failsafe4 = true;
+                    }
                 }
+
+                //We sort the list in order to get the first cell
+                //that has the smallest Count number
+                Steps.Sort();
+                if (failsafe1)
+                {
+                    if (Steps[0] == Count[x + 1, y])
+                    {
+                        x++;
+                        //We use goto because even though some conditions are being met
+                        //we want to skip them. We do not want to increase x and y in the same loop
+                        goto SkipChecks;
+                    }
+                }
+                if (failsafe2)
+                {
+                    if (Steps[0] == Count[x - 1, y])
+                    {
+                        x--;
+                        goto SkipChecks;
+                    }
+                }
+                if (failsafe3)
+                {
+                    if (Steps[0] == Count[x, y + 1])
+                    {
+                        y++;
+                        goto SkipChecks;
+                    }
+                }
+                if (failsafe4)
+                {
+                    if (Steps[0] == Count[x, y - 1])
+                    {
+                        { y--; }
+                    }
+                }
+            //We increase the count of the new cell
+            //so that we avoid it in the future
+            SkipChecks:
+                Count[x, y]++;
             }
         }
 
 
+
         static void Main(string[] args)
         {
-            Maze player = new Maze();
+            int m = 0;
+            Maze hero = new Maze(ref m);
 
-            //We manually put Hero's starting point
-            int x0 = 0;
-            int y0 = 0;
+            Console.WriteLine("How many obstacles did we find?");
+            Console.WriteLine(m);
 
-            //We manually put Labyrinth's Exit Point
-            int x1 = 4;
-            int y1 = 4;
-
-
-            //We run the maze challenge.
-            do
+            Console.WriteLine("And their positions were");
+            for (int i = 0; i < hero.size; i++)
             {
-                player.Forward(x0, y0);
+                for (int j = 0; j < hero.size; j++)
+                {
+                    if (hero.maze[i, j] == 0)
+                    {
+                        Console.WriteLine("{" + i + "}" + " " + "{" + j + "}");
+                    }
+                }
+            }
 
-            } while (x0 != x1 && y0 != y1);                        
+
+                    //We declare the starting point of the hero and the exit of the labyrinth 
+                    //in order to avoid clumpsy algorithm that will generate a random starting and finishing point.
+
+                    //We manually put Hero's starting point.
+                    int x_hero = 0;
+                    int y_hero = 0;
+
+                    //We manually put maze's Exit Point
+                    int x_exit = 4;
+                    int y_exit = 4;
+
+                    bool repeat = true;
+
+                    Console.WriteLine("The path of the hero was");
+                    while (repeat)
+                    {
+                        hero.Forward(ref x_hero, ref y_hero);
+                        Console.WriteLine("{" + x_hero + "}" + " " + "{" + y_hero + "}");
+                        if (x_hero == x_exit && y_hero == y_exit)
+                        {
+                            repeat = false;
+                        }
+
+                    }
+                }
+            }
         }
-    }
-}
