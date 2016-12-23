@@ -5,20 +5,16 @@ using System.Text;
 
 namespace Testapp 
 {
-
   public class Person 
   {
     public string Name { get; set; }
     public int Age { get; set; }
   }
 
-
   public class Program
   {
-   
     public delegate bool CheckAge(Person p);  
  
-    
     static void Main(string [] args)
     {
       Person p1 = new Person() {Name = "Sabina", Age = 16};
@@ -30,11 +26,6 @@ namespace Testapp
     
       Report("Children:", people, Child);
       Report("Adult:", people, Adult);
-    
-      //Sabina is child
-      //Johhn is adult
-      //Jessica is adult
-      //Dexter is child
       Console.Read();
     }
              
@@ -50,7 +41,7 @@ namespace Testapp
         }
       }
     }   
-      
+    
       static bool Child(Person p)
       {
         return p.Age < 18;
